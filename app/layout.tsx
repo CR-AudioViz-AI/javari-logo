@@ -1,3 +1,4 @@
+import './globals.css'
 // app/layout.tsx — root layout and site metadata
 //
 // 2026-08-12: the conformance check flagged javarilogo.com as the only live
@@ -9,6 +10,7 @@
 // CR AudioViz AI · EIN 39-3646201 · August 2026
 import type { Metadata } from 'next';
 import type { ReactNode, ReactElement } from 'react';
+import { EmbedBridge, EMBED_PREPAINT_SCRIPT } from '@craudioviz/platform-sdk'
 
 const TITLE = 'Javari Logo';
 const DESCRIPTION =
@@ -49,8 +51,13 @@ export default function RootLayout({
 }): ReactElement {
   return (
     <html lang="en">
+      <head>
+        {/* factory 2026-09-10: marks an embedded page before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: EMBED_PREPAINT_SCRIPT }} />
+      </head>
       <body style={{ margin: 0, padding: 0, background: '#0a0a0f' }}>
-        <header
+        <EmbedBridge />
+        <header data-app-chrome
           style={{
             background: 'rgba(0,0,0,0.85)', height: 60, display: 'flex',
             alignItems: 'center', justifyContent: 'space-between',
